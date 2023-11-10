@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.beans.PropertyDescriptor;
+import java.util.List;
 
 /**
  * Created by LaunchCode
@@ -32,6 +34,8 @@ public class ListController {
         tableChoices.put("location", JobData.getAllLocations());
         tableChoices.put("positionType", JobData.getAllPositionTypes());
         tableChoices.put("coreCompetency", JobData.getAllCoreCompetency());
+
+
     }
 
     @GetMapping(value = "")
@@ -42,6 +46,9 @@ public class ListController {
         model.addAttribute("locations", JobData.getAllLocations());
         model.addAttribute("positions", JobData.getAllPositionTypes());
         model.addAttribute("skills", JobData.getAllCoreCompetency());
+        List<String> stringList = new ArrayList<>(tableChoices.keySet());
+        model.addAttribute("tableChoicesKeys", stringList);
+
 
         return "list";
     }
@@ -57,7 +64,6 @@ public class ListController {
             model.addAttribute("title", "Jobs with " + columnChoices.get(column) + ": " + value);
         }
         model.addAttribute("jobs", jobs);
-
         return "list-jobs";
     }
 }
